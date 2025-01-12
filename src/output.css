@@ -556,4 +556,7 @@ video {
 
 body{
   background-image: url(../public/bg-img/pic2.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
