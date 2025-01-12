@@ -24,3 +24,19 @@ body{
 .addToCart{
     @apply bg-blue-600 p-1 px-2 hover:bg-blue-950 rounded-xl text-white mt-2
 }
+
+.row{
+    @apply flex justify-evenly mt-4
+}
+.titlePrice{
+    @apply text-white text-xl w-[200px] text-center
+}
+.removeBtn{
+    @apply bg-red-500 p-1 text-white rounded-md
+}
+.inputClass{
+    @apply w-12 h-5 p-1
+}
+.counContainer{
+    @apply text-center w-[200px] flex justify-evenly items-center
+}
