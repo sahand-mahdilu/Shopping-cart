@@ -16,3 +16,6 @@ let productArray=[
     {id:1, title:"GCX 500", price:590, count:1, image:"../public/images/15.png"},
     {id:1, title:"GLADIATOR 10X", price:800, count:1, image:"../public/images/16.png"},
 ]
+
+
+console.log(productArray);
