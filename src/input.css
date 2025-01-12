@@ -12,9 +12,10 @@ body{
 }
 
 .paginateBtns{
+    @apply bg-cyan-300;
     width: 26px;
     height: 26px;
-    background-color: deepskyblue;
+    
     border-radius: 100%;
     color:white
 }
@@ -39,4 +40,8 @@ body{
 }
 .counContainer{
     @apply text-center w-[200px] flex justify-evenly items-center
+}
+
+.red{
+    background-color: red !important;
 }

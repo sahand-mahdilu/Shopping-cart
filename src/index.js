@@ -178,10 +178,27 @@ function createPaginationBtn(pageCount,btnContainer,currentPage){
     paginationBtn.innerHTML=pageCount
     btnContainer.append(paginationBtn)
 
-    paginationBtn.addEventListener("click",function(e){
 
-        let btnValue=Number(e.target.innerHTML)
+    let btnValue=Number(paginationBtn.innerHTML)
+
+    if(btnValue===currentPage){
+     
+        paginationBtn.classList.add("red")
+    }
+
+
+
+
+
+
+    paginationBtn.addEventListener("click",function(){
+
          currentPage=btnValue
+         let prevBtn = document.querySelector(".red")
+         prevBtn.classList.remove("red")
+         paginationBtn.classList.add("red")
+
+          
          displayData(productArray, currentPage, dataCount, dataContainerElem);
 
         console.log(currentPage);
