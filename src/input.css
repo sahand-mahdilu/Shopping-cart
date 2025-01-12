@@ -10,3 +10,17 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.paginateBtns{
+    width: 26px;
+    height: 26px;
+    background-color: deepskyblue;
+    border-radius: 100%;
+    color:white
+}
+.cartClass{
+    @apply cursor-pointer bg-black/80 flex flex-col justify-center items-center w-[250px] rounded-lg p-4 hover:scale-[1.1] transition-all
+}
+.addToCart{
+    @apply bg-blue-600 p-1 px-2 hover:bg-blue-950 rounded-xl text-white mt-2
+}
