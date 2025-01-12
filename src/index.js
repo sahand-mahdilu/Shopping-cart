@@ -1,78 +1,183 @@
-let productArray=[
-    {id:1, title:"cx GAME", price:700, count:1, image:"../public/images/1.png"},
-    {id:2, title:"ASUS", price:600, count:1, image:"../public/images/2.png"},
-    {id:3, title:"DELL", price:500, count:1, image:"../public/images/3.png"},
-    {id:4, title:"zx 2000", price:400, count:1, image:"../public/images/4.png"},
-    {id:5, title:"INVIDIA", price:1000, count:1, image:"../public/images/5.png"},
-    {id:6, title:"HP", price:750, count:1, image:"../public/images/6.png"},
+let productArray = [
+  {
+    id: 1,
+    title: "cx GAME",
+    price: 700,
+    count: 1,
+    image: "../public/images/1.png",
+  },
+  {
+    id: 2,
+    title: "ASUS",
+    price: 600,
+    count: 1,
+    image: "../public/images/2.png",
+  },
+  {
+    id: 3,
+    title: "DELL",
+    price: 500,
+    count: 1,
+    image: "../public/images/3.png",
+  },
+  {
+    id: 4,
+    title: "zx 2000",
+    price: 400,
+    count: 1,
+    image: "../public/images/4.png",
+  },
+  {
+    id: 5,
+    title: "INVIDIA",
+    price: 1000,
+    count: 1,
+    image: "../public/images/5.png",
+  },
+  { id: 6, title: "HP", price: 750, count: 1, image: "../public/images/6.png" },
 
-    {id:7, title:"AMD GAME ", price:730, count:1, image:"../public/images/7.png"},
-    {id:8, title:"RIZEN", price:800, count:1, image:"../public/images/8.png"},
-    {id:9, title:"KX 1200", price:900, count:1, image:"../public/images/9.png"},
-    {id:10, title:"LENOVO GAME", price:950, count:1, image:"../public/images/10.png"},
-    {id:11, title:"LEGION", price:450, count:1, image:"../public/images/11.png"},
-    {id:12, title:"HX 200", price:720, count:1, image:"../public/images/12.png"},
+  {
+    id: 7,
+    title: "AMD GAME ",
+    price: 730,
+    count: 1,
+    image: "../public/images/7.png",
+  },
+  {
+    id: 8,
+    title: "RIZEN",
+    price: 800,
+    count: 1,
+    image: "../public/images/8.png",
+  },
+  {
+    id: 9,
+    title: "KX 1200",
+    price: 900,
+    count: 1,
+    image: "../public/images/9.png",
+  },
+  {
+    id: 10,
+    title: "LENOVO GAME",
+    price: 950,
+    count: 1,
+    image: "../public/images/10.png",
+  },
+  {
+    id: 11,
+    title: "LEGION",
+    price: 450,
+    count: 1,
+    image: "../public/images/11.png",
+  },
+  {
+    id: 12,
+    title: "HX 200",
+    price: 720,
+    count: 1,
+    image: "../public/images/12.png",
+  },
 
-    {id:13, title:"ROG 1700", price:560, count:1, image:"../public/images/13.png"},
-    {id:14, title:"GFORCE x90", price:920, count:1, image:"../public/images/14.png"},
-    {id:15, title:"GCX 500", price:590, count:1, image:"../public/images/15.png"},
-    {id:16, title:"GLADIATOR 10X", price:800, count:1, image:"../public/images/16.png"},
-]
+  {
+    id: 13,
+    title: "ROG 1700",
+    price: 560,
+    count: 1,
+    image: "../public/images/13.png",
+  },
+  {
+    id: 14,
+    title: "GFORCE x90",
+    price: 920,
+    count: 1,
+    image: "../public/images/14.png",
+  },
+  {
+    id: 15,
+    title: "GCX 500",
+    price: 590,
+    count: 1,
+    image: "../public/images/15.png",
+  },
+  {
+    id: 16,
+    title: "GLADIATOR 10X",
+    price: 800,
+    count: 1,
+    image: "../public/images/16.png",
+  },
+];
 
-const dataContainerElem = document.getElementById("container")
+const dataContainerElem = document.getElementById("container");
+const paginationBtnsContainer= document.querySelector(".btnsContainer")
 console.log(dataContainerElem);
-
 
 console.log(productArray);
 
-let currentPage=1
-let dataCount = 6
+let currentPage = 1;
+let dataCount = 6;
 
-function displayData(allData,currentPage,dataCount,dataContainer){
+function displayData(allData, currentPage, dataCount, dataContainer) {
+  let endtIndex = currentPage * dataCount;
+  let startIndex = endtIndex - dataCount;
 
-    let endtIndex= (currentPage*dataCount)
-    let startIndex= endtIndex-dataCount
+  let pageItems = allData.slice(startIndex, endtIndex);
 
-    let pageItems= allData.slice(startIndex,endtIndex)
+  pageItems.forEach(function (item) {
+    // product div
+    let newProduct = document.createElement("div");
+    newProduct.setAttribute("class", "cartClass");
 
-    pageItems.forEach(function(item){
-        // product div
-        let newProduct=document.createElement("div")
-        newProduct.setAttribute("class","cartClass")
+    // creating product img
+    let newImg = document.createElement("img");
+    newImg.setAttribute("src", item.image);
+    newImg.setAttribute("alt", "image");
 
-        // creating product img
-        let newImg= document.createElement("img")
-        newImg.setAttribute("src",item.image)
-        newImg.setAttribute("alt","image")
+    // creating product title
+    let newTitle = document.createElement("h2");
+    newTitle.setAttribute("class", "text-white");
+    newTitle.innerHTML = item.title;
+    //creating price
+    let newPrice = document.createElement("h2");
+    newPrice.classList = "text-white mt-1";
+    newPrice.innerHTML = `${item.price} $`;
+    // creating new botton
+    let newButton = document.createElement("button");
+    newButton.setAttribute("class", "addToCart");
+    newButton.innerHTML = "Add to cart";
 
-        // creating product title
-        let newTitle= document.createElement("h2")
-        newTitle.setAttribute("class","text-white")
-        newTitle.innerHTML=item.title
-        //creating price
-        let newPrice = document.createElement("h2")
-        newPrice.classList = "text-white mt-1"
-        newPrice.innerHTML=`${item.price} $`
-        // creating new botton 
-        let newButton= document.createElement("button")
-        newButton.setAttribute("class","addToCart")
-        newButton.innerHTML="Add to cart"
+    // appending elements
+    newProduct.append(newImg, newTitle, newPrice, newButton);
 
-        // appending elements
-        newProduct.append(newImg,newTitle,newPrice,newButton)
+    
 
-        console.log(newProduct);
+    dataContainer.append(newProduct);
+  });
+}
 
 
-        dataContainer.append(newProduct)
-    })
+function setupPagination(allData,dataCount,btnContainer){
 
-  
+    let pageCount= Math.ceil(allData.length/dataCount)//num
 
- 
-
+    for(let i=1 ; i<pageCount+1 ; i++){
+        createPaginationBtn(i,btnContainer)
+    }
 
 }
 
 
-displayData(productArray,currentPage,dataCount,dataContainerElem)
+function createPaginationBtn(pageCount,btnContainer){
+
+    let paginationBtn= document.createElement("button")
+    paginationBtn.setAttribute("class","paginateBtns")
+    paginationBtn.innerHTML=pageCount
+    btnContainer.append(paginationBtn)
+
+}
+
+
+setupPagination(productArray,dataCount,paginationBtnsContainer)
+
+displayData(productArray, currentPage, dataCount, dataContainerElem);
