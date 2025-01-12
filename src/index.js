@@ -119,6 +119,9 @@ let currentPage = 1;
 let dataCount = 6;
 
 function displayData(allData, currentPage, dataCount, dataContainer) {
+
+    dataContainerElem.innerHTML=""
+
   let endtIndex = currentPage * dataCount;
   let startIndex = endtIndex - dataCount;
 
@@ -157,27 +160,36 @@ function displayData(allData, currentPage, dataCount, dataContainer) {
 }
 
 
-function setupPagination(allData,dataCount,btnContainer){
+function setupPagination(allData,dataCount,btnContainer,currentPage){
 
     let pageCount= Math.ceil(allData.length/dataCount)//num
 
     for(let i=1 ; i<pageCount+1 ; i++){
-        createPaginationBtn(i,btnContainer)
+        createPaginationBtn(i,btnContainer,currentPage)
     }
 
 }
 
 
-function createPaginationBtn(pageCount,btnContainer){
+function createPaginationBtn(pageCount,btnContainer,currentPage){
 
     let paginationBtn= document.createElement("button")
     paginationBtn.setAttribute("class","paginateBtns")
     paginationBtn.innerHTML=pageCount
     btnContainer.append(paginationBtn)
 
+    paginationBtn.addEventListener("click",function(e){
+
+        let btnValue=Number(e.target.innerHTML)
+         currentPage=btnValue
+         displayData(productArray, currentPage, dataCount, dataContainerElem);
+
+        console.log(currentPage);
+    })
+
 }
 
 
-setupPagination(productArray,dataCount,paginationBtnsContainer)
+setupPagination(productArray,dataCount,paginationBtnsContainer,currentPage)
 
 displayData(productArray, currentPage, dataCount, dataContainerElem);
