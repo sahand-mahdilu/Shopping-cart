@@ -111,9 +111,9 @@ let productArray = [
 
 const dataContainerElem = document.getElementById("container");
 const paginationBtnsContainer = document.querySelector(".btnsContainer");
-const cartContainer = document.querySelector(".userCart_container")
-
-
+const cartContainer = document.querySelector(".userCart_container");
+const totalPriceElem = document.querySelector("#totalPrice");
+console.log(totalPriceElem);
 
 let localStaorageDAta = [];
 
@@ -151,19 +151,14 @@ function displayData(allData, currentPage, dataCount, dataContainer) {
     newButton.setAttribute("class", "addToCart");
     newButton.innerHTML = "Add to cart";
 
-   newButton.addEventListener("click",function(){
+    newButton.addEventListener("click", function () {
+      localStaorageDAta.push(item);
+      setLocalStorage(localStaorageDAta);
 
-    localStaorageDAta.push(item)
-    setLocalStorage(localStaorageDAta)
+      generateCArt(localStaorageDAta);
 
-
-    generateCArt(localStaorageDAta)
-
-
-   ///////////////////////////////////////////////////////////
-   
-
-   })
+      ///////////////////////////////////////////////////////////
+    });
 
     // appending elements
     newProduct.append(newImg, newTitle, newPrice, newButton);
@@ -205,80 +200,89 @@ function createPaginationBtn(pageCount, btnContainer, currentPage) {
 }
 // generating cart
 function generateCArt(items) {
-   cartContainer.innerHTML=""
+  cartContainer.innerHTML = "";
 
-  items.forEach(function(item){
-   
+  calculateTotal(items);
 
-      // create new cart div
-  let newCart = document.createElement("div");
-  newCart.classList = "row";
+  items.forEach(function (item) {
+    // create new cart div
+    let newCart = document.createElement("div");
+    newCart.classList = "row";
 
-  // creating title span
-  let newTitleSpan = document.createElement("span");
-  newTitleSpan.classList = "titlePrice";
-  newTitleSpan.innerHTML = item.title;
-  // creating price span
-  let newPriceSpan = document.createElement("span");
-  newPriceSpan.classList = "titlePrice";
-  newPriceSpan.innerHTML = `${item.price} $`;
+    // creating title span
+    let newTitleSpan = document.createElement("span");
+    newTitleSpan.classList = "titlePrice";
+    newTitleSpan.innerHTML = item.title;
+    // creating price span
+    let newPriceSpan = document.createElement("span");
+    newPriceSpan.classList = "titlePrice";
+    newPriceSpan.innerHTML = `${item.price} $`;
 
-  // creating buttons container div
+    // creating buttons container div
 
-  let newButtonsContainerDiv = document.createElement("div");
-  newButtonsContainerDiv.classList = "counContainer";
-  // creating cat input
-  let newCartInput = document.createElement("input");
-  newCartInput.setAttribute("type", "number");
-  newCartInput.classList = "inputClass";
-  newCartInput.value - item.count;
-  // creating remove button
-  let newRemoveBtn = document.createElement("button");
-  newRemoveBtn.classList = "removeBtn";
-  newRemoveBtn.innerHTML = "Remove";
+    let newButtonsContainerDiv = document.createElement("div");
+    newButtonsContainerDiv.classList = "counContainer";
+    // creating cat input
+    let newCartInput = document.createElement("input");
+    newCartInput.setAttribute("type", "number");
+    newCartInput.classList = "inputClass";
+    newCartInput.value - item.count;
+    // creating remove button
+    let newRemoveBtn = document.createElement("button");
+    newRemoveBtn.classList = "removeBtn";
+    newRemoveBtn.innerHTML = "Remove";
+    newRemoveBtn.addEventListener("click", function () {
+      removeSelectedCart(item.id);
+    });
 
-  // appending elements
+    // appending elements
 
-  newButtonsContainerDiv.append(newCartInput, newRemoveBtn);
+    newButtonsContainerDiv.append(newCartInput, newRemoveBtn);
 
-  newCart.append(newTitleSpan, newPriceSpan, newButtonsContainerDiv);
-  cartContainer.append(newCart)
-
-  })
-  
-
-  
-
+    newCart.append(newTitleSpan, newPriceSpan, newButtonsContainerDiv);
+    cartContainer.append(newCart);
+  });
 }
-
-
 
 // setting localStorage
-function setLocalStorage(dataArray){
-
-  localStorage.setItem("products",JSON.stringify(dataArray))
-
+function setLocalStorage(dataArray) {
+  localStorage.setItem("products", JSON.stringify(dataArray));
 }
 
+window.addEventListener("load", function () {
+  let datas = JSON.parse(this.localStorage.getItem("products"));
 
-
-window.addEventListener("load",function(){
-
-  let datas= JSON.parse(this.localStorage.getItem("products"))
-
-  if(datas){
-
-    localStaorageDAta=datas
-
-  }else{
-    localStaorageDAta=[]
+  if (datas) {
+    localStaorageDAta = datas;
+  } else {
+    localStaorageDAta = [];
   }
 
-  generateCArt(localStaorageDAta)
+  generateCArt(localStaorageDAta);
+});
 
-})
+function calculateTotal(items) {
+  let totalPrice = 0;
+  if (items) {
+    items.forEach(function (item) {
+      totalPrice += item.price;
+    });
+  }
+  totalPriceElem.innerHTML = `${totalPrice} $`;
+}
 
-console.log(localStaorageDAta);
+function removeSelectedCart(id) {
+  let dataInlocal = JSON.parse(localStorage.getItem("products")); //array
+
+  let Index = dataInlocal.findIndex(function (item) {
+    return item.id === id;
+  });
+
+  dataInlocal.splice(Index, 1);
+  setLocalStorage(dataInlocal);
+  generateCArt(dataInlocal);
+}
+
 
 
 setupPagination(productArray, dataCount, paginationBtnsContainer, currentPage);
