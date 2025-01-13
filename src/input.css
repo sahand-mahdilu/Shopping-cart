@@ -2,46 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-body{
-    background-image: url(../public/bg-img/pic2.jpg);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+  background-image: url(../public/bg-img/pic2.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.paginateBtns{
-    @apply bg-cyan-300;
-    width: 26px;
-    height: 26px;
-    
-    border-radius: 100%;
-    color:white
+.paginateBtns {
+  @apply bg-cyan-300;
+  width: 26px;
+  height: 26px;
+
+  border-radius: 100%;
+  color: white;
 }
-.cartClass{
-    @apply cursor-pointer bg-black/80 flex flex-col justify-center items-center w-[250px] rounded-lg p-4 hover:scale-[1.1] transition-all
+.cartClass {
+  @apply cursor-pointer bg-black/80 flex flex-col justify-center items-center w-[250px] rounded-lg p-4 hover:scale-[1.1] transition-all;
 }
-.addToCart{
-    @apply bg-blue-600 p-1 px-2 hover:bg-blue-950 rounded-xl text-white mt-2
+.addToCart {
+  @apply bg-blue-600 p-1 px-2 hover:bg-blue-950 rounded-xl text-white mt-2;
 }
 
-.row{
-    @apply flex justify-evenly mt-4
+.row {
+  @apply flex justify-evenly mt-4;
 }
-.titlePrice{
-    @apply text-white text-xl w-[200px] text-center
+.titlePrice {
+  @apply text-white text-xl w-[200px] text-center;
 }
-.removeBtn{
-    @apply bg-red-500 p-1 text-white rounded-md
+.removeBtn {
+  @apply bg-red-500 p-1 text-white rounded-md;
 }
-.inputClass{
-    @apply w-12 h-5 p-1
+.inputClass {
+  @apply w-12 h-5 p-1;
 }
-.counContainer{
-    @apply text-center w-[200px] flex justify-evenly items-center
+.counContainer {
+  @apply text-center w-[200px] flex justify-evenly items-center;
 }
 
-.red{
-    background-color: red !important;
+.red {
+  background-color: red !important;
 }

@@ -113,6 +113,8 @@ const dataContainerElem = document.getElementById("container");
 const paginationBtnsContainer = document.querySelector(".btnsContainer");
 const cartContainer = document.querySelector(".userCart_container")
 
+
+
 let localStaorageDAta = [];
 
 let currentPage = 1;
@@ -151,9 +153,16 @@ function displayData(allData, currentPage, dataCount, dataContainer) {
 
    newButton.addEventListener("click",function(){
 
+    localStaorageDAta.push(item)
+    setLocalStorage(localStaorageDAta)
+
+
+    generateCArt(localStaorageDAta)
+
+
+   ///////////////////////////////////////////////////////////
    
 
-    generateCArt(item)
    })
 
     // appending elements
@@ -195,8 +204,13 @@ function createPaginationBtn(pageCount, btnContainer, currentPage) {
   });
 }
 // generating cart
-function generateCArt(item) {
-  // create new cart div
+function generateCArt(items) {
+   cartContainer.innerHTML=""
+
+  items.forEach(function(item){
+   
+
+      // create new cart div
   let newCart = document.createElement("div");
   newCart.classList = "row";
 
@@ -230,8 +244,41 @@ function generateCArt(item) {
   newCart.append(newTitleSpan, newPriceSpan, newButtonsContainerDiv);
   cartContainer.append(newCart)
 
+  })
+  
+
+  
+
 }
 
+
+
+// setting localStorage
+function setLocalStorage(dataArray){
+
+  localStorage.setItem("products",JSON.stringify(dataArray))
+
+}
+
+
+
+window.addEventListener("load",function(){
+
+  let datas= JSON.parse(this.localStorage.getItem("products"))
+
+  if(datas){
+
+    localStaorageDAta=datas
+
+  }else{
+    localStaorageDAta=[]
+  }
+
+  generateCArt(localStaorageDAta)
+
+})
+
+console.log(localStaorageDAta);
 
 
 setupPagination(productArray, dataCount, paginationBtnsContainer, currentPage);

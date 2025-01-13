@@ -756,7 +756,7 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-body{
+body {
   background-image: url(../public/bg-img/pic2.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -769,7 +769,7 @@ body{
   width: 26px;
   height: 26px;
   border-radius: 100%;
-  color:white;
+  color: white;
 }
 
 .cartClass {
@@ -848,7 +848,7 @@ body{
   text-align: center;
 }
 
-.red{
+.red {
   background-color: red !important;
 }
 
