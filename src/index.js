@@ -110,17 +110,16 @@ let productArray = [
 ];
 
 const dataContainerElem = document.getElementById("container");
-const paginationBtnsContainer= document.querySelector(".btnsContainer")
-console.log(dataContainerElem);
+const paginationBtnsContainer = document.querySelector(".btnsContainer");
+const cartContainer = document.querySelector(".userCart_container")
 
-console.log(productArray);
+let localStaorageDAta = [];
 
 let currentPage = 1;
 let dataCount = 6;
 
 function displayData(allData, currentPage, dataCount, dataContainer) {
-
-    dataContainerElem.innerHTML=""
+  dataContainerElem.innerHTML = "";
 
   let endtIndex = currentPage * dataCount;
   let startIndex = endtIndex - dataCount;
@@ -150,63 +149,91 @@ function displayData(allData, currentPage, dataCount, dataContainer) {
     newButton.setAttribute("class", "addToCart");
     newButton.innerHTML = "Add to cart";
 
+   newButton.addEventListener("click",function(){
+
+   
+
+    generateCArt(item)
+   })
+
     // appending elements
     newProduct.append(newImg, newTitle, newPrice, newButton);
-
-    
 
     dataContainer.append(newProduct);
   });
 }
 
+function setupPagination(allData, dataCount, btnContainer, currentPage) {
+  let pageCount = Math.ceil(allData.length / dataCount); //num
 
-function setupPagination(allData,dataCount,btnContainer,currentPage){
+  for (let i = 1; i < pageCount + 1; i++) {
+    createPaginationBtn(i, btnContainer, currentPage);
+  }
+}
 
-    let pageCount= Math.ceil(allData.length/dataCount)//num
+function createPaginationBtn(pageCount, btnContainer, currentPage) {
+  let paginationBtn = document.createElement("button");
+  paginationBtn.setAttribute("class", "paginateBtns");
+  paginationBtn.innerHTML = pageCount;
+  btnContainer.append(paginationBtn);
 
-    for(let i=1 ; i<pageCount+1 ; i++){
-        createPaginationBtn(i,btnContainer,currentPage)
-    }
+  let btnValue = Number(paginationBtn.innerHTML);
+
+  if (btnValue === currentPage) {
+    paginationBtn.classList.add("red");
+  }
+
+  paginationBtn.addEventListener("click", function () {
+    currentPage = btnValue;
+    let prevBtn = document.querySelector(".red");
+    prevBtn.classList.remove("red");
+    paginationBtn.classList.add("red");
+
+    displayData(productArray, currentPage, dataCount, dataContainerElem);
+
+    console.log(currentPage);
+  });
+}
+// generating cart
+function generateCArt(item) {
+  // create new cart div
+  let newCart = document.createElement("div");
+  newCart.classList = "row";
+
+  // creating title span
+  let newTitleSpan = document.createElement("span");
+  newTitleSpan.classList = "titlePrice";
+  newTitleSpan.innerHTML = item.title;
+  // creating price span
+  let newPriceSpan = document.createElement("span");
+  newPriceSpan.classList = "titlePrice";
+  newPriceSpan.innerHTML = `${item.price} $`;
+
+  // creating buttons container div
+
+  let newButtonsContainerDiv = document.createElement("div");
+  newButtonsContainerDiv.classList = "counContainer";
+  // creating cat input
+  let newCartInput = document.createElement("input");
+  newCartInput.setAttribute("type", "number");
+  newCartInput.classList = "inputClass";
+  newCartInput.value - item.count;
+  // creating remove button
+  let newRemoveBtn = document.createElement("button");
+  newRemoveBtn.classList = "removeBtn";
+  newRemoveBtn.innerHTML = "Remove";
+
+  // appending elements
+
+  newButtonsContainerDiv.append(newCartInput, newRemoveBtn);
+
+  newCart.append(newTitleSpan, newPriceSpan, newButtonsContainerDiv);
+  cartContainer.append(newCart)
 
 }
 
 
-function createPaginationBtn(pageCount,btnContainer,currentPage){
 
-    let paginationBtn= document.createElement("button")
-    paginationBtn.setAttribute("class","paginateBtns")
-    paginationBtn.innerHTML=pageCount
-    btnContainer.append(paginationBtn)
-
-
-    let btnValue=Number(paginationBtn.innerHTML)
-
-    if(btnValue===currentPage){
-     
-        paginationBtn.classList.add("red")
-    }
-
-
-
-
-
-
-    paginationBtn.addEventListener("click",function(){
-
-         currentPage=btnValue
-         let prevBtn = document.querySelector(".red")
-         prevBtn.classList.remove("red")
-         paginationBtn.classList.add("red")
-
-          
-         displayData(productArray, currentPage, dataCount, dataContainerElem);
-
-        console.log(currentPage);
-    })
-
-}
-
-
-setupPagination(productArray,dataCount,paginationBtnsContainer,currentPage)
+setupPagination(productArray, dataCount, paginationBtnsContainer, currentPage);
 
 displayData(productArray, currentPage, dataCount, dataContainerElem);
