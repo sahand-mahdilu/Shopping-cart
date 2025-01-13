@@ -113,6 +113,7 @@ const dataContainerElem = document.getElementById("container");
 const paginationBtnsContainer = document.querySelector(".btnsContainer");
 const cartContainer = document.querySelector(".userCart_container");
 const totalPriceElem = document.querySelector("#totalPrice");
+const purchaceBtn = document.querySelector("#purchace");
 console.log(totalPriceElem);
 
 let localStaorageDAta = [];
@@ -225,8 +226,19 @@ function generateCArt(items) {
     // creating cat input
     let newCartInput = document.createElement("input");
     newCartInput.setAttribute("type", "number");
+    newCartInput.setAttribute("min", "1");
     newCartInput.classList = "inputClass";
-    newCartInput.value - item.count;
+    newCartInput.value = item.count;
+    newCartInput.addEventListener("change", function (e) {
+      let value = e.target.value;
+      item.count = +value;
+
+      console.log(localStaorageDAta);
+
+      setLocalStorage(localStaorageDAta);
+
+      calculateTotal(items);
+    });
     // creating remove button
     let newRemoveBtn = document.createElement("button");
     newRemoveBtn.classList = "removeBtn";
@@ -250,7 +262,7 @@ function setLocalStorage(dataArray) {
 }
 
 window.addEventListener("load", function () {
-  let datas = JSON.parse(this.localStorage.getItem("products"));
+  let datas = JSON.parse(localStorage.getItem("products"));
 
   if (datas) {
     localStaorageDAta = datas;
@@ -265,7 +277,7 @@ function calculateTotal(items) {
   let totalPrice = 0;
   if (items) {
     items.forEach(function (item) {
-      totalPrice += item.price;
+      totalPrice += item.price * item.count;
     });
   }
   totalPriceElem.innerHTML = `${totalPrice} $`;
@@ -283,7 +295,13 @@ function removeSelectedCart(id) {
   generateCArt(dataInlocal);
 }
 
+purchaceBtn.addEventListener("click", clearCart);
 
+function clearCart() {
+  localStorage.clear("products");
+  localStaorageDAta = [];
+  generateCArt(localStaorageDAta);
+}
 
 setupPagination(productArray, dataCount, paginationBtnsContainer, currentPage);
 
