@@ -153,7 +153,28 @@ function displayData(allData, currentPage, dataCount, dataContainer) {
     newButton.innerHTML = "Add to cart";
 
     newButton.addEventListener("click", function () {
-      localStaorageDAta.push(item);
+
+      let existingProduct= localStaorageDAta.find(function(product){
+
+        return product.id===item.id
+
+      })
+
+      
+      if(existingProduct){
+        existingProduct.count+=1
+        console.log("dont");
+        
+      }else{
+
+        localStaorageDAta.push({...item});
+        console.log(localStaorageDAta);
+      }
+      
+
+     
+
+
       setLocalStorage(localStaorageDAta);
 
       generateCArt(localStaorageDAta);
