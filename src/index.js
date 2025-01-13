@@ -291,6 +291,14 @@ function removeSelectedCart(id) {
   });
 
   dataInlocal.splice(Index, 1);
+  console.log(dataInlocal);
+  if(dataInlocal.length===0){
+    localStaorageDAta=[]
+    setLocalStorage(dataInlocal);
+  }
+
+
+
   setLocalStorage(dataInlocal);
   generateCArt(dataInlocal);
 }
